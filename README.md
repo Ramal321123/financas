@@ -18,6 +18,23 @@ Os dados ficam só no celular (localStorage do navegador). Nada vai pra internet
   e só entra no saldo quando o dia chegar
 - Celular: barra inferior flutuante. Computador: barra lateral. Funciona offline.
 
+## Usar no iPhone (recomendado)
+
+O app está publicado em **https://ramal321123.github.io/financas/** (só o código; os dados
+continuam só no aparelho).
+
+1. Abrir o endereço no **Safari**
+2. Compartilhar → **Adicionar à Tela de Início**
+3. Usar sempre pelo ícone (o app instalado não sofre a limpeza de 7 dias do Safari)
+
+Depois de aberto uma vez, funciona offline.
+
+## Publicar uma atualização
+
+1. Subir a versão em `sw.js` (`financas-v10` → `financas-v11`)
+2. `sh publicar.sh`
+3. No celular, abrir o app com internet: a primeira abertura baixa a versão nova, a segunda já usa
+
 ## Rodar no PC (pra testar)
 
 ```
@@ -26,7 +43,7 @@ node servidor.js
 
 Abrir http://localhost:8080
 
-## Rodar no iPhone (localhost)
+## Rodar no iPhone sem internet (localhost, alternativa)
 
 1. Instalar o **a-Shell** (App Store, grátis — terminal com Python embutido)
 2. Mandar a pasta `financas` pro iPhone (zip pelo iCloud Drive, WhatsApp ou e-mail pra você
