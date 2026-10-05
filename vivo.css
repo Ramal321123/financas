@@ -1,0 +1,222 @@
+/* =====================================================================
+   CAMADA VIVA — cores fortes, brilho, fundo animado e efeitos de estado.
+   Carregada depois de style.css. Anima só transform/opacity (filter
+   pontualmente) e desliga com prefers-reduced-motion.
+   ===================================================================== */
+
+/* ---------- fundo vivo ---------- */
+.fundo-vivo { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.blob { position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%; opacity: calc(.55 * var(--aura-forca)); will-change: transform; }
+.b1 { left: -25vmax; top: -30vmax; background: radial-gradient(closest-side, color-mix(in srgb, var(--verde) 22%, transparent), transparent); animation: deriva-1 38s ease-in-out infinite alternate; }
+.b2 { right: -30vmax; top: 10vh; background: radial-gradient(closest-side, color-mix(in srgb, var(--roxo) 20%, transparent), transparent); animation: deriva-2 46s ease-in-out infinite alternate; }
+.b3 { left: 10vw; bottom: -40vmax; background: radial-gradient(closest-side, color-mix(in srgb, var(--azul) 16%, transparent), transparent); animation: deriva-3 52s ease-in-out infinite alternate; }
+@keyframes deriva-1 { to { transform: translate(12vmax, 10vmax) scale(1.15); } }
+@keyframes deriva-2 { to { transform: translate(-14vmax, 8vmax) scale(.9); } }
+@keyframes deriva-3 { to { transform: translate(8vmax, -12vmax) scale(1.1); } }
+.particula {
+  position: absolute; left: var(--x); top: var(--y); width: var(--t); height: var(--t); border-radius: 50%;
+  background: var(--particula); opacity: 0;
+  animation: flutuar-part var(--dur) ease-in-out var(--atraso) infinite;
+}
+@keyframes flutuar-part {
+  0% { opacity: 0; transform: translate3d(0, 0, 0); }
+  40%, 60% { opacity: var(--op); }
+  100% { opacity: 0; transform: translate3d(var(--dx), -60px, 0); }
+}
+.topo { background: color-mix(in srgb, var(--fundo) 72%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); }
+.topo::after { display: none; }
+
+/* ---------- patrimônio: aura atrás do valor ---------- */
+.hero { position: relative; isolation: isolate; padding-top: 18px; padding-bottom: 10px; }
+.aura { position: absolute; z-index: -1; left: -10%; top: -30%; width: 120%; height: 170%; pointer-events: none; }
+.aura span { position: absolute; border-radius: 50%; will-change: transform, opacity; transition: opacity 1.2s var(--ease); }
+.aura-1 { left: 0; top: 10%; width: 72%; height: 90%; background: radial-gradient(closest-side, color-mix(in srgb, var(--aura-a, var(--verde)) 42%, transparent), transparent); opacity: calc(.55 * var(--aura-forca)); animation: aura-pulso 7s ease-in-out infinite; }
+.aura-2 { left: 26%; top: 0; width: 60%; height: 80%; background: radial-gradient(closest-side, color-mix(in srgb, var(--aura-b, var(--ciano)) 34%, transparent), transparent); opacity: calc(.45 * var(--aura-forca)); animation: aura-pulso 9s ease-in-out -3s infinite reverse; }
+.aura-3 { left: 8%; top: 35%; width: 45%; height: 55%; background: radial-gradient(closest-side, color-mix(in srgb, var(--aura-a, var(--verde)) 55%, transparent), transparent); opacity: 0; transform: scale(.6); }
+@keyframes aura-pulso { 0%, 100% { transform: scale(.92) translate(0, 0); } 50% { transform: scale(1.1) translate(3%, -2%); } }
+.hero.desce { --aura-a: var(--desce); --aura-b: var(--magenta); }
+.hero.desce .aura-1 { opacity: calc(.32 * var(--aura-forca)); }
+.hero-roxo { --aura-a: var(--roxo); --aura-b: var(--azul); }
+/* reação a mudança de valor: sobe = brilho verde mais forte; cai = vermelho discreto */
+.hero.cresce .aura-3 { --aura-a: var(--verde); animation: aura-reage 3.2s var(--ease); }
+.hero.cai .aura-3 { --aura-a: var(--desce); animation: aura-reage-cai 2.6s var(--ease); }
+@keyframes aura-reage { 0% { opacity: 0; transform: scale(.6); } 25% { opacity: calc(.9 * var(--aura-forca)); transform: scale(1.25); } 100% { opacity: 0; transform: scale(1.4); } }
+@keyframes aura-reage-cai { 0% { opacity: 0; transform: scale(.7); } 30% { opacity: calc(.45 * var(--aura-forca)); transform: scale(1.05); } 100% { opacity: 0; transform: scale(1.1); } }
+.hero-num { position: relative; text-shadow: 0 0 40px color-mix(in srgb, var(--aura-a, var(--verde)) 22%, transparent); }
+.hero-num.reage { animation: numero-reage .9s var(--ease); }
+@keyframes numero-reage { 30% { transform: scale(1.035); } }
+
+/* onda de energia saindo do valor (nova entrada) */
+.onda {
+  position: absolute; left: var(--ox); top: var(--oy); width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; pointer-events: none;
+  border: 2px solid var(--cor-onda, var(--verde));
+  box-shadow: 0 0 24px color-mix(in srgb, var(--cor-onda, var(--verde)) 50%, transparent), inset 0 0 24px color-mix(in srgb, var(--cor-onda, var(--verde)) 30%, transparent);
+  animation: onda 1.3s var(--ease) forwards;
+}
+@keyframes onda { from { transform: scale(.15); opacity: .9; } to { transform: scale(3.2); opacity: 0; } }
+/* valor flutuando: "+ R$ 450,00" sobe, "− R$ 80,00" desce */
+.flutua {
+  position: absolute; left: var(--ox); top: var(--oy); font-weight: 700; font-size: 15px; white-space: nowrap; pointer-events: none;
+  padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, currentColor 14%, var(--superficie));
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  animation: flutua-sobe 2.2s var(--ease) forwards;
+}
+.flutua.entra-dinheiro { color: var(--sobe); }
+.flutua.sai-dinheiro { color: var(--magenta); animation-name: flutua-desce; }
+.flutua.investe { color: var(--roxo); }
+@keyframes flutua-sobe { 0% { opacity: 0; transform: translate(-50%, 10px) scale(.8); } 15% { opacity: 1; transform: translate(-50%, 0) scale(1); } 75% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -34px) scale(.96); } }
+@keyframes flutua-desce { 0% { opacity: 0; transform: translate(-50%, -10px) scale(.8); } 15% { opacity: 1; transform: translate(-50%, 0) scale(1); } 75% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 26px) scale(.96); } }
+
+/* novo recorde */
+.recorde {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+  font-size: 11px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; color: var(--ouro);
+  padding: 5px 11px 5px 8px; border-radius: 999px; position: relative; overflow: hidden;
+  background: color-mix(in srgb, var(--ouro) 12%, transparent); border: 1px solid color-mix(in srgb, var(--ouro) 35%, transparent);
+  animation: recorde-entra .8s var(--ease) 1.1s backwards;
+}
+.recorde svg.ic { width: 14px; height: 14px; animation: gira-brilho 4s ease-in-out infinite; }
+.recorde::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--ouro) 45%, transparent) 50%, transparent 70%); transform: translateX(-110%); animation: varre 3.5s ease-in-out 2s infinite; }
+.recorde.estoura { animation: recorde-estoura 1.2s var(--ease); }
+@keyframes recorde-entra { from { opacity: 0; transform: translateY(6px) scale(.85); } }
+@keyframes recorde-estoura { 0% { transform: scale(.6); opacity: 0; } 45% { transform: scale(1.12); opacity: 1; box-shadow: 0 0 30px color-mix(in srgb, var(--ouro) 60%, transparent); } 100% { transform: scale(1); } }
+@keyframes gira-brilho { 0%, 70%, 100% { transform: rotate(0) scale(1); } 80% { transform: rotate(25deg) scale(1.25); } }
+@keyframes varre { 0% { transform: translateX(-110%); } 40%, 100% { transform: translateX(110%); } }
+
+/* partículas de explosão (meta concluída, recorde, meta criada) */
+.estouro-part { position: absolute; left: var(--ox); top: var(--oy); width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--cor-part); box-shadow: 0 0 8px var(--cor-part); pointer-events: none; z-index: 5; animation: estouro .95s var(--ease) forwards; }
+@keyframes estouro { from { transform: rotate(var(--ang)) translateY(0) scale(1); opacity: 1; } to { transform: rotate(var(--ang)) translateY(calc(var(--dist) * -1)) scale(0); opacity: 0; } }
+
+/* ---------- telas: fade + scale + slide + blur sutil ---------- */
+@keyframes entrar { from { opacity: 0; transform: translate(calc(var(--dir, 0) * 18px), 16px) scale(.975); filter: blur(5px); } }
+.entra { animation: entrar .65s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 60ms); }
+.view.saindo > * { animation: sair .17s ease-in forwards; }
+@keyframes sair { to { opacity: 0; transform: translateX(calc(var(--dir, 0) * -16px)) scale(.985); filter: blur(4px); } }
+
+/* ---------- cards vivos: luz que segue o cursor + brilho na entrada ---------- */
+.card, .kpi, .acao, .insight { position: relative; }
+.kpi, .acao, .insight { overflow: hidden; }
+.card::before, .kpi::before, .acao::before, .insight::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--cor, var(--verde)) 16%, transparent), transparent 70%);
+  opacity: 0; transition: opacity .45s var(--ease);
+}
+.card > *, .kpi > *, .acao > *, .insight > * { position: relative; z-index: 1; }
+.entra.card::before, .entra.kpi::before, .entra .kpi::before { animation: brilho-entrada 1.6s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 60ms + .2s); }
+@keyframes brilho-entrada { 0% { opacity: 0; } 35% { opacity: .9; } 100% { opacity: 0; } }
+@media (hover: hover) {
+  .card:hover::before, .kpi:hover::before, .acao:hover::before, .insight:hover::before { opacity: 1; }
+  .card:hover, .kpi:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--cor, var(--verde)) 30%, var(--borda-forte));
+    box-shadow: inset 0 1px 0 var(--realce), var(--sombra-alta), 0 14px 40px -12px color-mix(in srgb, var(--cor, var(--verde)) 35%, transparent);
+  }
+  .kpi:hover .kpi-icone { transform: scale(1.12) rotate(-8deg); }
+}
+
+/* KPIs com cores fortes e ícone em gradiente */
+.k-disp { --cor: var(--azul); }
+.k-inv { --cor: var(--roxo); }
+.k-rend { --cor: var(--ouro); }
+.k-rec { --cor: var(--ciano); }
+.kpi-icone {
+  color: #fff; background: linear-gradient(135deg, var(--cor), color-mix(in srgb, var(--cor) 55%, var(--magenta)));
+  box-shadow: 0 4px 14px -2px color-mix(in srgb, var(--cor) 55%, transparent);
+  transition: transform .45s var(--ease), box-shadow .45s;
+}
+.kpi.confirma { animation: confirma 1.4s var(--ease); }
+@keyframes confirma { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--cor) 60%, transparent), var(--sombra); } 100% { box-shadow: 0 0 0 16px transparent, var(--sombra); } }
+.kpi.confirma .kpi-icone { animation: selo .8s var(--ease); }
+
+/* ---------- botões com personalidade ---------- */
+.btn, .acao, .chip, .icone-btn, .insight, .passo { position: relative; overflow: hidden; }
+.btn-primario, .acao.destaque, .icone-acento {
+  background: linear-gradient(120deg, var(--verde), var(--ciano), var(--verde)); background-size: 220% 100%; background-position: 0% 50%;
+  color: var(--acento-tinta); border-color: transparent;
+  box-shadow: 0 8px 26px -6px color-mix(in srgb, var(--verde) 55%, transparent);
+  transition: transform .35s var(--ease), box-shadow .4s var(--ease), background-position .8s var(--ease), filter .3s;
+}
+@media (hover: hover) {
+  .btn:hover, .acao:hover, .chip:hover, .passo:hover { transform: translateY(-2px) scale(1.02); }
+  .btn-primario:hover, .acao.destaque:hover, .icone-acento:hover { background-position: 100% 50%; filter: brightness(1.07); box-shadow: 0 10px 34px -4px color-mix(in srgb, var(--verde) 70%, transparent); }
+  .acao:not(.destaque):hover { box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--cor-acao, var(--verde)) 55%, transparent); border-color: color-mix(in srgb, var(--cor-acao, var(--verde)) 40%, var(--borda)); }
+}
+.btn:active, .acao:active, .chip:active, .passo:active, .icone-btn:active { transform: scale(.95); transition-duration: .09s; }
+/* cor de cada ação rápida */
+.acao[data-acao="novo-receita"] { --cor: var(--verde); --cor-acao: var(--verde); }
+.acao[data-acao="novo-despesa"] { --cor: var(--magenta); --cor-acao: var(--magenta); }
+.acao[data-acao="nova-meta"] { --cor: var(--ouro); --cor-acao: var(--ouro); }
+.acao[data-acao="novo-resgate"] { --cor: var(--azul); --cor-acao: var(--azul); }
+.acao[data-acao="novo-rendimento"] { --cor: var(--ouro); --cor-acao: var(--ouro); }
+.acao:not(.destaque) .acao-ic { color: var(--cor-acao, var(--tinta)); background: color-mix(in srgb, var(--cor-acao, var(--tinta)) 14%, var(--superficie-3)); }
+.acao.destaque .acao-ic { background: rgba(0, 0, 0, .16); }
+/* onda do clique */
+.ripple { position: absolute; left: var(--rx); top: var(--ry); width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: currentColor; opacity: .28; pointer-events: none; z-index: 2; animation: ripple .6s var(--ease) forwards; }
+@keyframes ripple { to { transform: scale(var(--rs, 30)); opacity: 0; } }
+
+/* insight com gradiente que se move devagar */
+.insight {
+  background: linear-gradient(100deg, color-mix(in srgb, var(--verde) 16%, transparent), color-mix(in srgb, var(--ciano) 7%, transparent), color-mix(in srgb, var(--verde) 16%, transparent)) 0 0 / 220% 100%, var(--superficie);
+  animation: gradiente-move 9s ease-in-out infinite alternate;
+}
+@keyframes gradiente-move { to { background-position: 100% 0, 0 0; } }
+.insight-ic { color: var(--acento-tinta); background: linear-gradient(135deg, var(--verde), var(--ciano)); box-shadow: 0 6px 18px -4px color-mix(in srgb, var(--verde) 60%, transparent); }
+
+/* ---------- gráficos com brilho ---------- */
+.g-brilho { fill: none; stroke-width: 7; opacity: .5; stroke-linecap: round; stroke-linejoin: round; }
+.g-ponto { stroke: var(--superficie); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ponto-surge .5s var(--ease) backwards; animation-delay: var(--d); }
+@keyframes ponto-surge { from { transform: scale(0); opacity: 0; } }
+.g-hover-brilho { opacity: 0; transition: opacity .2s; }
+.grafico.ativo .g-hover-brilho { opacity: .35; }
+.grafico-card { --cor: var(--verde); }
+
+/* ---------- barras de metas: gradiente + brilho percorrendo ---------- */
+.preench.brilha { position: relative; overflow: hidden; background: linear-gradient(90deg, var(--verde), var(--ciano)); box-shadow: 0 0 12px color-mix(in srgb, var(--verde) 45%, transparent); }
+.preench.brilha::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .6), transparent); transform: translateX(-100%); animation: varre 3.2s ease-in-out 1.4s infinite; }
+.concluida .preench.brilha { background: linear-gradient(90deg, var(--ouro), #f97316); box-shadow: 0 0 12px color-mix(in srgb, var(--ouro) 45%, transparent); }
+.meta-icone { color: var(--acento-tinta); background: linear-gradient(135deg, var(--verde), var(--ciano)); box-shadow: 0 6px 16px -4px color-mix(in srgb, var(--verde) 55%, transparent); }
+.meta-card.concluida .meta-icone, .meta-mini.concluida .meta-icone { color: #1a1000; background: linear-gradient(135deg, var(--ouro), #f97316); box-shadow: 0 6px 18px -4px color-mix(in srgb, var(--ouro) 65%, transparent); }
+.meta-card { --cor: var(--verde); }
+.meta-card.concluida { --cor: var(--ouro); border-color: color-mix(in srgb, var(--ouro) 35%, var(--borda)); }
+.meta-selo { color: var(--ouro); }
+.meta-card.criada, .meta-mini.criada { animation: meta-criada .9s var(--ease); }
+@keyframes meta-criada { 0% { transform: scale(.85); opacity: 0; } 60% { transform: scale(1.03); opacity: 1; } 100% { transform: scale(1); } }
+.celebra { animation: pulso-ouro 1.6s var(--ease); }
+@keyframes pulso-ouro { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ouro) 55%, transparent), var(--sombra); } 100% { box-shadow: 0 0 0 26px transparent, var(--sombra); } }
+.celebra::after { background: linear-gradient(105deg, transparent 30%, color-mix(in srgb, var(--ouro) 30%, transparent) 50%, transparent 70%); }
+
+/* ---------- movimentação nova acende na lista ---------- */
+.item.novo { animation: item-novo 1.8s var(--ease); }
+@keyframes item-novo { 0% { background: color-mix(in srgb, var(--cor) 30%, transparent); transform: translateX(-10px); } 100% { background: transparent; transform: none; } }
+.t-receita { --cor: var(--verde); }
+.t-despesa { --cor: var(--magenta); }
+.t-aporte, .t-resgate { --cor: var(--roxo); }
+.t-rendimento { --cor: var(--ouro); }
+.item-icone { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cor) 22%, transparent); }
+
+/* ---------- navegação, logo e avisos ---------- */
+.nav-indicador {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--verde) 20%, transparent), color-mix(in srgb, var(--ciano) 12%, transparent));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--verde) 25%, transparent), 0 0 22px -4px color-mix(in srgb, var(--verde) 45%, transparent);
+}
+.toast.entrada .toast-icone { background: linear-gradient(135deg, var(--verde), var(--ciano)); }
+.toast.saida .toast-icone { background: var(--magenta); color: #fff; }
+.toast.invest .toast-icone { background: linear-gradient(135deg, var(--roxo), var(--azul)); color: #fff; }
+.toast.meta .toast-icone { background: linear-gradient(135deg, var(--ouro), #f97316); color: #1a1000; }
+
+@media (prefers-reduced-motion: reduce) {
+  .particula, .aura-3, .onda, .flutua, .estouro-part, .ripple { display: none; }
+  .card::before, .kpi::before, .acao::before, .insight::before { display: none; }
+}
+
+.periodos button, .seg button, .nav button { overflow: hidden; }
+
+/* Animações de chegada só ao abrir a tela (classe .entra). Ao salvar algo a tela é
+   redesenhada, e sem isso o selo de recorde e a seta piscariam a cada atualização. */
+.delta-icone, .recorde, .razao, .dist-barra { animation: none; }
+.entra .delta-icone { animation: seta .9s var(--ease) .5s backwards; }
+.entra .recorde:not(.estoura) { animation: recorde-entra .8s var(--ease) 1.1s backwards; }
+.entra .razao, .entra .dist-barra { animation: revelar 1.1s var(--ease) .25s backwards; }
+.recorde.estoura { animation: recorde-estoura 1.2s var(--ease); }
+.tema-btn svg { animation: none; }
+.tema-btn.gira svg { animation: girar .6s var(--ease); }

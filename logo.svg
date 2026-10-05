@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64"><defs>
+    <radialGradient id="fi2" cx=".3" cy=".2" r="1"><stop offset="0" stop-color="#0F2A1E"/><stop offset="1" stop-color="#040A07"/></radialGradient></defs>
+    <rect width="512" height="512" rx="0" fill="url(#fi2)"/>
+    <!--<rect x="1.5" y="1.5" width="509" height="509" rx="113.7" fill="none" stroke="#fff" stroke-opacity=".06" stroke-width="3"/>-->
+    <g transform="translate(256,256) rotate(-30) scale(0.6066887480401194) translate(-461.6,-241.60000000000002)"><defs>
+  <linearGradient id="ic1-cor" gradientUnits="userSpaceOnUse" x1="121.60000000000001" y1="361.6" x2="801.6" y2="121.60000000000001">
+    <stop offset="0" stop-color="#00B86A"/><stop offset=".5" stop-color="#00EC88"/><stop offset="1" stop-color="#45FFBC"/>
+  </linearGradient>
+  <linearGradient id="ic1-vol" gradientUnits="userSpaceOnUse" x1="0" y1="102.60000000000002" x2="0" y2="380.6">
+    <stop offset="0" stop-color="#fff" stop-opacity="0.55"/><stop offset=".18" stop-color="#fff" stop-opacity="0"/>
+    <stop offset=".78" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.28"/>
+  </linearGradient>
+  <clipPath id="ic1-ct"><circle cx="461.6" cy="133.45195332323382" r="91.2"/></clipPath>
+  <clipPath id="ic1-cb"><circle cx="461.6" cy="349.7480466767662" r="91.2"/></clipPath>
+  <mask id="ic1-mR" maskUnits="userSpaceOnUse" x="0" y="0" width="923.2" height="483.20000000000005"><rect width="923.2" height="483.20000000000005" fill="#fff"/><path d="M241.60000000000002,121.60000000000002H409.6A120,120 0 0 1 409.6,361.6H241.60000000000002A120,120 0 0 1 241.60000000000002,121.60000000000002Z" fill="none" stroke="#000" stroke-width="62" clip-path="url(#ic1-ct)"/></mask>
+  <mask id="ic1-mL" maskUnits="userSpaceOnUse" x="0" y="0" width="923.2" height="483.20000000000005"><rect width="923.2" height="483.20000000000005" fill="#fff"/><path d="M513.6,121.60000000000002H681.6A120,120 0 0 1 681.6,361.6H513.6A120,120 0 0 1 513.6,121.60000000000002Z" fill="none" stroke="#000" stroke-width="62" clip-path="url(#ic1-cb)"/></mask>
+  <mask id="ic1-fL" maskUnits="userSpaceOnUse" x="0" y="0" width="923.2" height="483.20000000000005"><path d="M241.60000000000002,121.60000000000002H409.6A120,120 0 0 1 409.6,361.6H241.60000000000002A120,120 0 0 1 241.60000000000002,121.60000000000002Z" fill="none" stroke="#fff" stroke-width="38"/></mask>
+  <mask id="ic1-fR" maskUnits="userSpaceOnUse" x="0" y="0" width="923.2" height="483.20000000000005"><path d="M513.6,121.60000000000002H681.6A120,120 0 0 1 681.6,361.6H513.6A120,120 0 0 1 513.6,121.60000000000002Z" fill="none" stroke="#fff" stroke-width="38"/></mask>
+  <filter id="ic1-sb" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="12.16"/></filter>
+  <filter id="ic1-gl" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="49.4"/></filter>
+  <filter id="ic1-au" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="13.299999999999999"/></filter>
+</defs>
+
+<g mask="url(#ic1-mL)">
+    <path d="M241.60000000000002,121.60000000000002H409.6A120,120 0 0 1 409.6,361.6H241.60000000000002A120,120 0 0 1 241.60000000000002,121.60000000000002Z" fill="none" stroke="url(#ic1-cor)" stroke-width="38"/>
+    <path d="M241.60000000000002,121.60000000000002H409.6A120,120 0 0 1 409.6,361.6H241.60000000000002A120,120 0 0 1 241.60000000000002,121.60000000000002Z" fill="none" stroke="url(#ic1-vol)" stroke-width="38"/>
+    <g mask="url(#ic1-fL)" opacity="0.6"><g filter="url(#ic1-sb)"><path d="M513.6,121.60000000000002H681.6A120,120 0 0 1 681.6,361.6H513.6A120,120 0 0 1 513.6,121.60000000000002Z" fill="none" stroke="#000" stroke-width="77.2" clip-path="url(#ic1-cb)"/></g></g>
+  </g>
+<g mask="url(#ic1-mR)">
+    <path d="M513.6,121.60000000000002H681.6A120,120 0 0 1 681.6,361.6H513.6A120,120 0 0 1 513.6,121.60000000000002Z" fill="none" stroke="url(#ic1-cor)" stroke-width="38"/>
+    <path d="M513.6,121.60000000000002H681.6A120,120 0 0 1 681.6,361.6H513.6A120,120 0 0 1 513.6,121.60000000000002Z" fill="none" stroke="url(#ic1-vol)" stroke-width="38"/>
+    <g mask="url(#ic1-fR)" opacity="0.6"><g filter="url(#ic1-sb)"><path d="M241.60000000000002,121.60000000000002H409.6A120,120 0 0 1 409.6,361.6H241.60000000000002A120,120 0 0 1 241.60000000000002,121.60000000000002Z" fill="none" stroke="#000" stroke-width="77.2" clip-path="url(#ic1-ct)"/></g></g>
+  </g></g></svg>
